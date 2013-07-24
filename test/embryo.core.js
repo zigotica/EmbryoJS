@@ -85,14 +85,15 @@ describe("EMBRYO .addClass, .removeClass, .hasClass (matches classList add/remov
         expect(h.hasClass('yetotherclass')).not.toBe(true);
     });
 
-    it("sections (first) should have 'imasection' added", function() {
-        s.addClass("imasection");
-        expect(s.eq(0).hasClass('imasection')).toBe(true);
+    it("sections (check first) should have 'imasection supercoolsection' added", function() {
+        s.addClass("imasection", "supercoolsection");
+        expect(s.eq(0).hasClass('supercoolsection','imasection')).toBe(true);
     });
 });
 
 describe("EMBRYO .show, .hide", function() {
-        var maindiv = $( '#maindiv' );
+        var maindiv = $( '#maindiv' ),
+            s = $( 'section' );
 
     it("#maindiv should be hidden now", function() {
         maindiv.hide();
@@ -102,6 +103,16 @@ describe("EMBRYO .show, .hide", function() {
     it("#maindiv should be visible now", function() {
         maindiv.show();
         expect(maindiv.css("display")).toBe("block");
+    });
+
+    it("section's should be hidden now (check first)", function() {
+        s.hide();
+        expect(s.eq(0).css("display")).toBe("none");
+    });
+
+    it("section's should be visible now (check first)", function() {
+        s.show();
+        expect(s.eq(0).css("display")).toBe("block");
     });
 });
 

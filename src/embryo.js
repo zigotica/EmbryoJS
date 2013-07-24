@@ -24,6 +24,12 @@ var Embryo = (function (window, undefined) {
         return what.nodeType === 1;
     };
 
+    normalizeArgs = function( smth ){
+        var args = smth;
+        if( typeof args[0] !== "string") args = smth[0];
+        return args;
+    };
+
     // $ instanceof Embryo.constructor
     $ = function(selector, root) {
         // modified from https://github.com/james2doyle/saltjs
@@ -77,33 +83,6 @@ var Embryo = (function (window, undefined) {
     };
 
     $.collection = {
-        css : function(prop, value) {
-            this.forEach(function(elm){
-                if (value) elm.style[prop] = value;
-                // we will probably need conversors (rgb-hex, opoacity, size units, …)
-                else return elm.style[prop] || document.defaultView.getComputedStyle(elm, null).getPropertyValue(prop);
-            });
-            // chain me
-            return this;
-        },
-        attr : function(name, value) {
-            this.forEach(function(elm){
-                if(value) elm.setAttribute(name, value);
-                else return elm.getAttribute(name);
-            });
-            // chain me
-            return this;
-        },
-        show : function() {
-            this.css("display", "block");
-            // chain me
-            return this;
-        },
-        hide : function() {
-            this.css("display", "none");
-            // chain me
-            return this;
-        },
         // filter by index
         eq : function( index ){
             var elm = (this[index])? this[index] : [],
@@ -138,44 +117,56 @@ var Embryo = (function (window, undefined) {
         noop : function(){}
     };
     // bulk delegate to $.item:
-    ['hasClass','addClass','removeClass'].forEach(function(method){
-        $.collection[method] = function(whatever){
-            console.log( method );
+    ['show','hide','css','attr','hasClass','addClass','removeClass'].forEach(function(method){
+        $.collection[method] = function(){
+            var args = arguments;
             this.forEach(function(elm){
                 var Elm = new Item(elm);
-                return Elm[method](whatever);
+                return Elm[method](args);
             });
         };
     });
     
 
     $.item = {
-        css : function(prop, value) {
-            console.log("css for item, prop " + prop + " " + this.style[prop]);
+        css : function() {
+            var args = normalizeArgs(arguments),
+                prop = args[0],
+                value = args[1];
             if (value) this.style[prop] = value;
             else return this.style[prop] || document.defaultView.getComputedStyle(this, null).getPropertyValue(prop);
             // chain me
             return this;
         },
-        attr : function(name, value) {
+        attr : function() {
+            var args = normalizeArgs(arguments),
+                name = args[0],
+                value = args[1];
             if(value) this.setAttribute(name, value);
             else return this.getAttribute(name);
             // chain me
             return this;
         },
-        hasClass : function(className) {
-            return this.classList.contains(className);
+        hasClass : function() {
+            // strict: contains all classes in arguments
+            var args = normalizeArgs(arguments);
+            for (var i = 0, len = args.length; i < len; i++) {
+                if( this.classList.contains(args[i]) === false) return false;
+            }
+            return true;
         },
-        addClass : function(className) {
-            for (var i = 0, len = arguments.length; i < len; i++) {
-                this.classList.add(arguments[i]);
+        addClass : function() {
+            var args = normalizeArgs(arguments);
+            for (var i = 0, len = args.length; i < len; i++) {
+                this.classList.add(args[i]);
             }
             // chain me
             return this;
         },
-        removeClass : function(className) {
-            for (var i = 0, len = arguments.length; i < len; i++) {
-                this.classList.remove(arguments[i]);
+        removeClass : function() {
+            var args = normalizeArgs(arguments);
+            for (var i = 0, len = args.length; i < len; i++) {
+                this.classList.remove(args[i]);
             }
             // chain me
             return this;
@@ -213,12 +204,6 @@ var Embryo = (function (window, undefined) {
         },
         noop : function(){}
     };
-
-    // dont like extending the whole Element DOM interface plus using 
-    // if(this.length > 1) { … } else { var Elm = this[0] || this; … }
-    // but it's the fastest/shortest way now
-    // var Elm = this[0] || this; hack does not yet work for window elm
-    // $.extend(Element.prototype, $.item);
 
     return $;
 })(window);
