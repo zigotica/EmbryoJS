@@ -2,9 +2,11 @@
 /*                                                                                     EMBRYO TEST SUITE
 /* ----------------------------------------------------------------------------------------------------- */
 
-describe("EMBRYO CORE SELECTIONS: $, .find", function() {
+describe("EMBRYO CORE SELECTIONS: $, .find, .eq", function() {
         var q = $( 'section .maindiv p' ),
-            a = q.find('a');
+            a = q.find('a'),
+            four = q.eq(3),
+            hund = q.eq(99);
 
     it("$('section .maindiv p') should return 4 nodes", function() {
         expect(q.length).toBe(4);
@@ -15,8 +17,15 @@ describe("EMBRYO CORE SELECTIONS: $, .find", function() {
         expect(a.length).toBe(2);
         expect(q.length).not.toBe(0);
     });
-});
 
+    it("4th matched paragraph should exist", function() {
+        expect(four.nodeType).toBe(1);
+    });
+
+    it("100th matched paragraph should not exist", function() {
+        expect(hund.nodeType).toBeUndefined();
+    });
+});
 
 describe("EMBRYO .css(set/get)", function() {
         var q = $( 'section .maindiv p' ),
@@ -25,16 +34,6 @@ describe("EMBRYO .css(set/get)", function() {
             q.css('outline','1px solid red');
             h.css('outline','2px solid orange');
             main.css('outline','1px solid green');
-
-    it("third matched paragraph should have red outline", function() {
-        expect(q[2].css('outline-color')).toEqual('red');
-        expect(q[2].css('outline-color')).not.toEqual('orange');
-    });
-
-    it("third matched paragraph should have 1px outline", function() {
-        expect(q[2].css('outline-width')).toEqual('1px');
-        expect(q[2].css('outline-width')).not.toEqual('10px');
-    });
 
     it("$('#h') should be 40px height", function() {
         expect(h.css('height')).toEqual('40px');
@@ -45,6 +44,17 @@ describe("EMBRYO .css(set/get)", function() {
         expect(h.css('outline-width')).toEqual('2px');
         expect(h.css('outline-width')).not.toEqual('10px');
     });
+
+    it("third matched paragraph should have red outline", function() {
+        expect(q.eq(2).css('outline-color')).toEqual('red');
+        expect(q.eq(2).css('outline-color')).not.toEqual('orange');
+    });
+
+    it("third matched paragraph should have 1px outline", function() {
+        expect(q.eq(2).css('outline-width')).toEqual('1px');
+        expect(q.eq(2).css('outline-width')).not.toEqual('10px');
+    });
+    
 });
 
 describe("EMBRYO .attr(set/get)", function() {
@@ -57,7 +67,8 @@ describe("EMBRYO .attr(set/get)", function() {
 });
 
 describe("EMBRYO .addClass, .removeClass, .hasClass (matches classList add/remove/contains)", function() {
-        var h = $( '#h' );
+        var h = $( '#h' ),
+            s = $( 'section' );
 
     it("#h should have 'mainp' in classList, not 'otherclass'", function() {
         expect(h.hasClass('mainp')).toBe(true);
@@ -72,6 +83,11 @@ describe("EMBRYO .addClass, .removeClass, .hasClass (matches classList add/remov
     it("#h should have 'mainp otherclass' but 'yetotherclass' removed", function() {
         h.removeClass("yetotherclass");
         expect(h.hasClass('yetotherclass')).not.toBe(true);
+    });
+
+    it("sections (first) should have 'imasection' added", function() {
+        s.addClass("imasection");
+        expect(s.eq(0).hasClass('imasection')).toBe(true);
     });
 });
 
