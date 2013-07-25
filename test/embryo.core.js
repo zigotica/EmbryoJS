@@ -2,9 +2,9 @@
 /*                                                                                     EMBRYO TEST SUITE
 /* ----------------------------------------------------------------------------------------------------- */
 
-describe("EMBRYO CORE SELECTIONS: $, .find, .eq", function() {
+describe("EMBRYO CORE SELECTIONS: $, .children, .eq", function() {
         var q = $( 'section .maindiv p' ),
-            a = q.find('a'),
+            a = q.children('a'),
             four = q.eq(3),
             hund = q.eq(99);
 
@@ -13,7 +13,7 @@ describe("EMBRYO CORE SELECTIONS: $, .find, .eq", function() {
         expect(q.length).not.toBe(0);
     });
 
-    it("$('section .maindiv p').find('a') should return 2 nodes (find only one level deep)", function() {
+    it("$('section .maindiv p').children('a') should return 2 nodes (=one level deep)", function() {
         expect(a.length).toBe(2);
         expect(q.length).not.toBe(0);
     });

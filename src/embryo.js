@@ -89,8 +89,7 @@ var Embryo = (function (window, undefined) {
                 Elm = new Item(elm);
             return Elm;
         },
-        // only one level deep simple selectors, not combinators nor multiple selectors (just yet)
-        find : function(selector) {
+        children : function(selector) {
             var collection  = [],
                 type        = selector[0]; //type: '#', '.' or element
 
@@ -181,8 +180,7 @@ var Embryo = (function (window, undefined) {
             // chain me
             return this;
         },
-        // only one level deep simple selectors, not combinators nor multiple selectors (just yet)
-        find : function(selector) {
+        children : function(selector) {
             var collection  = [],
                 type        = selector[0]; //type: '#', '.' or element
 
