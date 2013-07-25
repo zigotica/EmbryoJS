@@ -89,6 +89,11 @@ describe("EMBRYO .addClass, .removeClass, .hasClass (matches classList add/remov
         s.addClass("imasection", "supercoolsection");
         expect(s.eq(0).hasClass('supercoolsection','imasection')).toBe(true);
     });
+
+    it("sections (check first) should not have 'imasection supersection' added", function() {
+        s.addClass("imasection", "supercoolsection");
+        expect(s.eq(0).hasClass('supersection','imasection')).not.toBe(true);
+    });
 });
 
 describe("EMBRYO .show, .hide", function() {
