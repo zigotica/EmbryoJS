@@ -2,29 +2,29 @@
 /*                                                                                                EMBRYO
 /* ----------------------------------------------------------------------------------------------------- */
 
-var Embryo = (function (window, undefined) {
+(function (window, undefined) {
     // add $.collection methods to collections returned by $(selector)
-    Collection = function( array ){
+    var Collection = function( array ){
         $.extend(array, $.collection);    
         return array;
     };
 
     // add $.item methods to items returned by $(selector) or collections.forEach
-    Item = function( elm ){
+    var Item = function( elm ){
         $.extend(elm, $.item);    
         return elm;
     };
 
-    isNodeList = function( what ){
+    var isNodeList = function( what ){
         var pr = Object.prototype.toString.call(what);
         return (pr === '[object HTMLCollection]' || pr === '[object NodeList]');
     };
 
-    isHTMLElement = function( what ){
+    var isHTMLElement = function( what ){
         return what.nodeType === 1;
     };
 
-    normalizeArgs = function( smth ){
+    var normalizeArgs = function( smth ){
         var args = smth;
         if( typeof args[0] !== "string") args = smth[0];
         return args;
@@ -78,7 +78,11 @@ var Embryo = (function (window, undefined) {
     };
 
     $.extend = function(to, from){ 
-        for (var key in from) to[key] = from[key];
+        for (var key in from) {
+            if(from.hasOwnProperty(key)){
+                to[key] = from[key];
+            }
+        }
         return to;
     };
 
