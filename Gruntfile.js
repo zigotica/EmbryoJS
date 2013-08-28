@@ -45,7 +45,7 @@ module.exports = function(grunt) {
         watch: {
             dev: {
                 files: ['<%= TESTS %>/embryo.test.html', '<%= jshint.files %>'],
-                tasks: ['jshint', 'concat'],
+                tasks: ['jshint', 'concat', 'uglify'],
                 options: {
                     livereload: true,
                     interrupt: true,
