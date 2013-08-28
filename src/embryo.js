@@ -122,11 +122,17 @@
     // bulk delegate to $.item:
     ['show','hide','css','attr','hasClass','addClass','removeClass'].forEach(function(method){
         $.collection[method] = function(){
-            var args = arguments;
-            this.forEach(function(elm){
-                var Elm = new Item(elm);
+            var args = arguments, Elm;
+            if(this.length === 1) {
+                Elm = new Item(this[0]);
                 return Elm[method](args);
-            });
+            }
+            else {
+                this.forEach(function(elm){
+                    Elm = new Item(elm);
+                    return Elm[method](args);
+                });
+            }
         };
     });
     
