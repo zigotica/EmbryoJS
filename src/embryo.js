@@ -210,17 +210,6 @@
             return this;
 
         },
-        on : function(){
-            var args    = normalizeArgs(arguments),
-                evt     = args[0], 
-                fn      = (args[2])?args[2]:args[1],
-                sel     = (args[2])?args[1]:null;
-
-            this.addEventListener(evt, fn, false);
-
-            // allow for chaining
-            return this;
-        },
         noop : function(){}
     };
 
