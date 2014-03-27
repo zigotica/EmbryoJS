@@ -16,7 +16,7 @@
     };
 
     var isNodeList = function( what ){
-        var pr = Object.prototype.toString.call(what);
+        var pr = Object.prototype.toString.call(what); 
         return (pr === '[object HTMLCollection]' || pr === '[object NodeList]');
     };
 
@@ -120,16 +120,9 @@
         noop : function(){}
     };
     // bulk delegate to $.item:
-    ['show','hide','css','attr','hasClass','addClass','removeClass'].forEach(function(method){
+    'show hide css attr hasClass addClass removeClass on'.split(' ').forEach(function(method){
         $.collection[method] = function(){
             var args = arguments, Elm, L = this.length;
-            /*for (var i = 0; i < L; i++) {
-                console.log(method + " move block to external function");
-                //Elm = new Item(this[i]);
-                //return Elm[method](args);
-                THIS(this[i], method, args);
-            }
-            */
             if(L === 1) {
                 Elm = new Item(this[0]);
                 return Elm[method](args);
@@ -216,6 +209,17 @@
             // chain me
             return this;
 
+        },
+        on : function(){
+            var args    = normalizeArgs(arguments),
+                evt     = args[0], 
+                fn      = (args[2])?args[2]:args[1],
+                sel     = (args[2])?args[1]:null;
+
+            this.addEventListener(evt, fn, false);
+
+            // allow for chaining
+            return this;
         },
         noop : function(){}
     };
