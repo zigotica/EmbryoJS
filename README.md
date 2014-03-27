@@ -13,5 +13,8 @@ We are using [GruntJS](http://gruntjs.com/) to build the library. It is setup to
 ## Testing
 [Jasmine v1.3](http://jasmine.github.io/) is used to test the library.
 
+## Status
+Use at your own risk, not yet for production.
+
 ## License
 [FreeBSD](http://github.com/zigotica/embryojs/LICENSE-FreeBSD.txt)
