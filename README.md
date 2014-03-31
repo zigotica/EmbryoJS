@@ -28,4 +28,4 @@ We are using [GruntJS](http://gruntjs.com/) to build the library. It is setup to
 Use at your own risk, not yet for production.
 
 ## License
-[FreeBSD](http://github.com/zigotica/embryojs/LICENSE-FreeBSD.txt)
+[FreeBSD](http://github.com/zigotica/embryojs/blob/master/LICENSE.txt)
