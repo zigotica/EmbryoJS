@@ -32,7 +32,7 @@
     "grunt-contrib-jshint": "~3.2.0",
     "grunt-contrib-uglify": "~5.2.1",
     "grunt-contrib-concat": "~0.3.0",
-    "grunt-contrib-connect": "~3.0.0",
+    "grunt-contrib-connect": "~4.0.0",
     "grunt-contrib-watch": "~0.4.4"
   }
 }
